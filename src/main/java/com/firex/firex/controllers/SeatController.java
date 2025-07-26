@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/seat")
 public class SeatController implements RestControllerInterface<Seat> {
@@ -20,6 +22,12 @@ public class SeatController implements RestControllerInterface<Seat> {
     public Seat create(Seat data) {
         return seatService.create(data);
     }
+
+    @PostMapping("/all")
+    public List<Seat> createAll(List<Seat> seat){
+        return seatService.createAll(seat);
+    }
+
 
     @Override
     public Seat update() {

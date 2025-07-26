@@ -19,14 +19,15 @@ public class MovieController implements RestControllerInterface<Movie> {
     private MovieService movieService;
 
 
+    @PostMapping
     @Override
     public Movie create(@RequestBody Movie data) {
         return movieService.create(data);
     }
 
     @PostMapping("/all")
-    public List<Movie> createAll(@RequestBody List<Movie> movie){
-        return movieService.addAllMovie(movie);
+    public List<Movie> createAll(@RequestBody List<Movie> data){
+        return movieService.createAll(data);
     }
 
     @Override

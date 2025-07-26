@@ -20,9 +20,10 @@ public class MovieService implements RestServiceInterface<Movie> {
         return movieRepository.save(data);
     }
 
-    public List<Movie> addAllMovie(List<Movie> movie) {
-        return movieRepository.saveAll(movie);
+    public List<Movie> createAll(List<Movie> data) {
+        return movieRepository.saveAll(data);
     }
+
 
 
     @Override

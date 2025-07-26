@@ -37,3 +37,4 @@ public class AdminController implements RestControllerInterface<Admin> {
         return null;
     }
 }
+

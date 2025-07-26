@@ -15,13 +15,15 @@ public class ScreenService implements RestServiceInterface<Screen> {
     private ScreenRepository screenRepository;
 
 
-    public List<Screen> addAllScreen(List<Screen> screen){
-        return screenRepository.saveAll(screen);
-    }
+
 
     @Override
     public Screen create(Screen data) {
         return screenRepository.save(data);
+    }
+
+    public List<Screen> createAll(List<Screen> screen){
+        return screenRepository.saveAll(screen);
     }
 
     @Override

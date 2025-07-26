@@ -14,13 +14,15 @@ public class SeatService implements RestServiceInterface<Seat> {
     @Autowired
     private SeatRepository seatRepository;
 
-    public List<Seat> addAllSeat(List<Seat> seat){
-        return seatRepository.saveAll(seat);
-    }
+
 
     @Override
     public Seat create(Seat data) {
         return seatRepository.save(data);
+    }
+
+    public List<Seat> createAll(List<Seat> seat){
+        return seatRepository.saveAll(seat);
     }
 
     @Override

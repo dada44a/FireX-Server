@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/screen")
 public class ScreenController implements RestControllerInterface<Screen> {
@@ -16,10 +18,6 @@ public class ScreenController implements RestControllerInterface<Screen> {
     @Autowired
     private ScreenService screenService;
 
-
-    public Screen createAll() {
-        return null;
-    }
 
     public Screen findAll() {
         return null;
@@ -29,6 +27,12 @@ public class ScreenController implements RestControllerInterface<Screen> {
     @Override
     public Screen create(@RequestBody Screen data) {
         return screenService.create(data);
+    }
+
+
+    @PostMapping("/all")
+    public List<Screen> createAll(@RequestBody List<Screen> data) {
+        return screenService.createAll(data);
     }
 
     @Override

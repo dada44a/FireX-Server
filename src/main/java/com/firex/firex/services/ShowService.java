@@ -15,14 +15,16 @@ public class ShowService implements RestServiceInterface<Show> {
     private ShowRepository showRepository;
 
 
-    public List<Show> addAllSeat(List<Show> seat){
-        return showRepository.saveAll(seat);
-    }
 
     @Override
     public Show create(Show data) {
         return showRepository.save(data);
     }
+
+    public List<Show> createAll(List<Show> seat){
+        return showRepository.saveAll(seat);
+    }
+
 
     @Override
     public Show update() {
