@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScreenService implements RestServiceInterface<Screen> {
@@ -37,7 +38,9 @@ public class ScreenService implements RestServiceInterface<Screen> {
     }
 
     @Override
-    public Screen delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+        screenRepository.deleteById(id);
+        return Map.of("result", "Sucess");
     }
 }

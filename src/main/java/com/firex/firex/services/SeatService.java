@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SeatService implements RestServiceInterface<Seat> {
@@ -36,7 +37,9 @@ public class SeatService implements RestServiceInterface<Seat> {
     }
 
     @Override
-    public Seat delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+        seatRepository.deleteById(id);
+        return Map.of("result", "Sucess");
     }
 }

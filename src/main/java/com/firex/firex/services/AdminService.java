@@ -7,6 +7,9 @@ import com.firex.firex.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AdminService implements RestServiceInterface<Admin> {
 
@@ -28,8 +31,12 @@ public class AdminService implements RestServiceInterface<Admin> {
         return null;
     }
 
+
+
     @Override
-    public Admin delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+         adminRepository.deleteById(id);
+         return Map.of("result", "Sucess");
     }
 }

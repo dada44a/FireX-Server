@@ -4,11 +4,10 @@ import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Seat;
 import com.firex.firex.services.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/seat")
@@ -40,7 +39,10 @@ public class SeatController implements RestControllerInterface<Seat> {
     }
 
     @Override
-    public Seat delete() {
-        return null;
+    @DeleteMapping("/{id}")
+    public Map<String,String> delete(@PathVariable long id) {
+
+        seatService.delete(id);
+        return Map.of("result", "Sucess");
     }
 }

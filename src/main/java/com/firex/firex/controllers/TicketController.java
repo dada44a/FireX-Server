@@ -4,9 +4,9 @@ import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Ticket;
 import com.firex.firex.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ticket")
@@ -32,7 +32,10 @@ public class TicketController implements RestControllerInterface<Ticket> {
     }
 
     @Override
-    public Ticket delete() {
-        return null;
+    @DeleteMapping("/{id}")
+    public Map<String,String> delete(@PathVariable long id) {
+
+        ticketService.delete(id);
+        return Map.of("result", "Sucess");
     }
 }

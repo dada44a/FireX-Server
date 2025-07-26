@@ -6,6 +6,8 @@ import com.firex.firex.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class TicketService implements RestServiceInterface<Ticket> {
 
@@ -27,8 +29,9 @@ public class TicketService implements RestServiceInterface<Ticket> {
         return null;
     }
 
-    @Override
-    public Ticket delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+        ticketRepository.deleteById(id);
+        return Map.of("result", "Sucess");
     }
 }

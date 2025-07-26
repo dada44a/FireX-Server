@@ -4,12 +4,10 @@ import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Screen;
 import com.firex.firex.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/screen")
@@ -46,7 +44,10 @@ public class ScreenController implements RestControllerInterface<Screen> {
     }
 
     @Override
-    public Screen delete() {
-        return null;
+    @DeleteMapping("/{id}")
+    public Map<String,String> delete(@PathVariable long id) {
+
+        screenService.delete(id);
+        return Map.of("result", "Sucess");
     }
 }

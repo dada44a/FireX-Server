@@ -4,12 +4,10 @@ import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Movie;
 import com.firex.firex.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/movie")
@@ -41,8 +39,11 @@ public class MovieController implements RestControllerInterface<Movie> {
     }
 
     @Override
-    public Movie delete() {
-        return null;
+    @DeleteMapping("/{id}")
+    public Map<String,String> delete(@PathVariable long id) {
+
+        movieService.delete(id);
+        return Map.of("result", "Sucess");
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ShowService implements RestServiceInterface<Show> {
@@ -36,8 +37,9 @@ public class ShowService implements RestServiceInterface<Show> {
         return null;
     }
 
-    @Override
-    public Show delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+        showRepository.deleteById(id);
+        return Map.of("result", "Sucess");
     }
 }

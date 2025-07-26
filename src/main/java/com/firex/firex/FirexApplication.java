@@ -15,7 +15,7 @@ public class FirexApplication {
 
 	@GetMapping("/")
 	public String hello(){
-		return "Hello";
+		return "Welcome To FireX";
 	}
 
 }

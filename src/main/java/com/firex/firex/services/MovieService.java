@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MovieService implements RestServiceInterface<Movie> {
@@ -37,7 +38,9 @@ public class MovieService implements RestServiceInterface<Movie> {
     }
 
     @Override
-    public Movie delete() {
-        return null;
+    public Map<String,String> delete(long id) {
+
+        movieRepository.deleteById(id);
+        return Map.of("result", "Sucess");
     }
 }
