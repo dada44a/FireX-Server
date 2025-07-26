@@ -1,5 +1,6 @@
 package com.firex.firex.controllers;
 
+import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Screen;
 import com.firex.firex.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/screen")
-public class ScreenController implements RestInterface<Screen> {
+public class ScreenController implements RestControllerInterface<Screen> {
 
     @Autowired
     private ScreenService screenService;

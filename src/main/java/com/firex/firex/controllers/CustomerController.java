@@ -1,5 +1,6 @@
 package com.firex.firex.controllers;
 
+import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Customer;
 import com.firex.firex.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/customer")
-public class CustomerController implements RestInterface<Customer> {
+public class CustomerController implements RestControllerInterface<Customer> {
 
     @Autowired
     private CustomerService customerService;

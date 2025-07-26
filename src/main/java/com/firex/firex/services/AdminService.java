@@ -1,5 +1,6 @@
 package com.firex.firex.services;
 
+import com.firex.firex.interfaces.RestServiceInterface;
 import com.firex.firex.models.Admin;
 
 import com.firex.firex.repository.AdminRepository;

@@ -1,5 +1,6 @@
 package com.firex.firex.services;
 
+import com.firex.firex.interfaces.RestServiceInterface;
 import com.firex.firex.models.Seat;
 import com.firex.firex.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;

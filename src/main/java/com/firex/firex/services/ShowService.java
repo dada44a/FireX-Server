@@ -1,6 +1,6 @@
 package com.firex.firex.services;
 
-import com.firex.firex.models.Seat;
+import com.firex.firex.interfaces.RestServiceInterface;
 import com.firex.firex.models.Show;
 import com.firex.firex.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ShowService implements RestServiceInterface<Show>{
+public class ShowService implements RestServiceInterface<Show> {
 
     @Autowired
     private ShowRepository showRepository;

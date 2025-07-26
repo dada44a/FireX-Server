@@ -1,4 +1,4 @@
-package com.firex.firex.services;
+package com.firex.firex.interfaces;
 
 public interface RestServiceInterface <I>{
     public I create(I data);

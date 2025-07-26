@@ -1,5 +1,6 @@
 package com.firex.firex.controllers;
 
+import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Movie;
 import com.firex.firex.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movie")
-public class MovieController implements RestInterface<Movie> {
+public class MovieController implements RestControllerInterface<Movie> {
 
     @Autowired
     private MovieService movieService;
