@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Builder(toBuilder = true)
@@ -24,7 +25,7 @@ public class Ticket {
     private String paymentMethod;
 
     @Column(nullable = false)
-    private String paymentDate;
+    private LocalDate paymentDate;
 
 
     @ManyToOne

@@ -8,6 +8,4 @@ public record MovieDTO(
         String description,
         LocalDate releaseDate,
         AdminSummaryDTO admin
-) {
-
-}
+){}
