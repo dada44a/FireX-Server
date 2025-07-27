@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Builder(toBuilder = true)
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,6 @@ public class Ticket {
     @ManyToOne
     private Show show;
 
-    @Column(name = "seat_ids")
-    @ElementCollection
-    private List<Integer> seatIds;
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private List<Seat> seats;
 }

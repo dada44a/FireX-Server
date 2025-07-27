@@ -20,14 +20,15 @@ public class TicketService implements RestServiceInterface<Ticket> {
     }
 
     @Override
-    public Ticket update() {
+    public Ticket update(long id, Ticket data) {
         return null;
     }
 
     @Override
-    public Ticket read() {
+    public Ticket read(long id) {
         return null;
     }
+
 
     public Map<String,String> delete(long id) {
 

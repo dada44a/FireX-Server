@@ -23,7 +23,7 @@ public class SeatController implements RestControllerInterface<Seat> {
     }
 
     @PostMapping("/all")
-    public List<Seat> createAll(List<Seat> seat){
+    public List<Seat> createAll(@RequestBody List<Seat> seat) {
         return seatService.createAll(seat);
     }
 
@@ -40,7 +40,7 @@ public class SeatController implements RestControllerInterface<Seat> {
 
     @Override
     @DeleteMapping("/{id}")
-    public Map<String,String> delete(@PathVariable long id) {
+    public Map<String, String> delete(@PathVariable long id) {
 
         seatService.delete(id);
         return Map.of("result", "Sucess");

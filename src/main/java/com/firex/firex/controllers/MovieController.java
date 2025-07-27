@@ -6,6 +6,7 @@ import com.firex.firex.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -16,43 +17,66 @@ public class MovieController implements RestControllerInterface<Movie> {
     @Autowired
     private MovieService movieService;
 
-
+    /**
+     * Create a new movie
+     * @param data Movie object from the request body
+     * @return The created movie
+     */
     @PostMapping
     @Override
     public Movie create(@RequestBody Movie data) {
         return movieService.create(data);
     }
 
-    @PostMapping("/all")
-    public List<Movie> createAll(@RequestBody List<Movie> data){
-        return movieService.createAll(data);
+    /**
+     * Update an existing movie by ID
+     * @param id Movie ID
+     * @param data Updated movie data
+     * @return The updated movie
+     */
+    @PutMapping("/{id}")
+    @Override
+    public Movie update(@PathVariable long id, @RequestBody Movie data) {
+        return movieService.update(id, data);
     }
 
+    /**
+     * Get a movie by ID
+     * @param id Movie ID
+     * @return Movie with the given ID
+     */
+    @GetMapping("/{id}")
     @Override
-    public Movie update() {
-        return null;
+    public Movie read(@PathVariable long id) {
+        return movieService.read(id);
     }
 
-    @Override
-    public Movie read() {
-        return null;
+    /**
+     * Get a list of all movies
+     * @return List of all movies
+     */
+    @GetMapping
+    public List<Movie> readAll() {
+        return movieService.readAll();
     }
 
-    @Override
+    /**
+     * Get movies that have shows scheduled for today
+     * @return List of movies with today's shows
+     */
+    @GetMapping("/now")
+    public List<Movie> getMoviesWithShowsToday() {
+        return movieService.getMoviesWithShowsToday(LocalDate.now());
+    }
+
+    /**
+     * Delete a movie by ID
+     * @param id Movie ID
+     * @return A success message
+     */
     @DeleteMapping("/{id}")
-    public Map<String,String> delete(@PathVariable long id) {
-
-        movieService.delete(id);
-        return Map.of("result", "Sucess");
-    }
-
-
-    public Movie createAll() {
-        return null;
-    }
-
-
-    public Movie findAll() {
-        return null;
+    @Override
+    public Map<String, String> delete(@PathVariable long id) {
+        return movieService.delete(id);
     }
 }

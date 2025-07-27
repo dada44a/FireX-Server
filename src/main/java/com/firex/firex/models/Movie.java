@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.List;
+
+@Builder(toBuilder = true)
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +25,14 @@ public class Movie {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private LocalDate releaseDate;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Show> shows;
+
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
+
 }

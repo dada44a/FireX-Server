@@ -16,28 +16,29 @@ public class ShowService implements RestServiceInterface<Show> {
     private ShowRepository showRepository;
 
 
-
     @Override
     public Show create(Show data) {
         return showRepository.save(data);
     }
 
-    public List<Show> createAll(List<Show> seat){
+    @Override
+    public Show update(long id, Show data) {
+        return null;
+    }
+
+    @Override
+    public Show read(long id) {
+        return null;
+    }
+
+    public List<Show> createAll(List<Show> seat) {
         return showRepository.saveAll(seat);
     }
 
 
-    @Override
-    public Show update() {
-        return null;
-    }
 
-    @Override
-    public Show read() {
-        return null;
-    }
 
-    public Map<String,String> delete(long id) {
+    public Map<String, String> delete(long id) {
 
         showRepository.deleteById(id);
         return Map.of("result", "Sucess");

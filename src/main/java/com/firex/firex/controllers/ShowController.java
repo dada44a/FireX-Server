@@ -23,8 +23,8 @@ public class ShowController implements RestControllerInterface<Show> {
     }
 
     @PostMapping("/all")
-    public List<Show> createAll(@RequestBody List<Show> seat){
-        return showService.createAll(seat);
+    public List<Show> createAll(@RequestBody List<Show> data){
+        return showService.createAll(data);
     }
 
     @Override

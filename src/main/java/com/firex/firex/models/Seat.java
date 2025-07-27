@@ -6,23 +6,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+@Builder(toBuilder = true)
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private int rows;
+    private String rows;
     @Column(nullable = false)
     private int columns;
-    @Column(columnDefinition = "boolean default false")
-    private Boolean status;
 
     @ManyToOne
     private Screen screen;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id") // <- new foreign key to Ticket
+    private Ticket ticket;
 }
 

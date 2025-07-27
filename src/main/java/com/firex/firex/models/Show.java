@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -19,8 +22,12 @@ public class Show {
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+
     @Column(nullable = false)
-    private String showTime;
+    private LocalTime showTime;
+
+    @Column(nullable = false)
+    private LocalDate showDate;
 
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)

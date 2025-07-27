@@ -22,19 +22,20 @@ public class SeatService implements RestServiceInterface<Seat> {
         return seatRepository.save(data);
     }
 
+    @Override
+    public Seat update(long id, Seat data) {
+        return null;
+    }
+
+    @Override
+    public Seat read(long id) {
+        return null;
+    }
+
     public List<Seat> createAll(List<Seat> seat){
         return seatRepository.saveAll(seat);
     }
 
-    @Override
-    public Seat update() {
-        return null;
-    }
-
-    @Override
-    public Seat read() {
-        return null;
-    }
 
     @Override
     public Map<String,String> delete(long id) {
