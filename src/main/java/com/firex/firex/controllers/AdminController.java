@@ -33,7 +33,7 @@ public class AdminController implements RestControllerInterface<Admin> {
      * @param data Updated admin data from request body
      * @return The updated Admin object
      */
-    @PutMapping("/{id}") // ✅ FIXED: @PathVariable must match the route
+    @PutMapping("/{id}")
     @Override
     public Admin update(@PathVariable long id, @RequestBody Admin data) {
         return adminService.update(id, data);

@@ -22,20 +22,21 @@ public class TicketController implements RestControllerInterface<Ticket> {
     }
 
     @Override
-    public Ticket update() {
+    public Ticket update(long id, Ticket data) {
         return null;
     }
 
     @Override
-    public Ticket read() {
+    public Ticket read(long id) {
         return null;
     }
+
 
     @Override
     @DeleteMapping("/{id}")
     public Map<String,String> delete(@PathVariable long id) {
 
         ticketService.delete(id);
-        return Map.of("result", "Sucess");
+        return Map.of("result", "Success");
     }
 }
