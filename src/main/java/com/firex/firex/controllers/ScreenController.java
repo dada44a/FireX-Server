@@ -16,38 +16,68 @@ public class ScreenController implements RestControllerInterface<Screen> {
     @Autowired
     private ScreenService screenService;
 
-
-    public Screen findAll() {
-        return null;
-    }
-
+    /**
+     * Create a new Screen
+     * @param data Screen data from request body
+     * @return Created Screen
+     */
     @PostMapping
     @Override
     public Screen create(@RequestBody Screen data) {
         return screenService.create(data);
     }
 
-
+    /**
+     * Create multiple Screens at once
+     * @param data List of Screen objects from request body
+     * @return List of created Screens
+     */
     @PostMapping("/all")
     public List<Screen> createAll(@RequestBody List<Screen> data) {
         return screenService.createAll(data);
     }
 
+    /**
+     * Update an existing Screen by ID
+     * @param id Screen ID from path variable
+     * @param data Updated Screen data from request body
+     * @return Updated Screen
+     */
+    @PutMapping("/{id}")
     @Override
-    public Screen update() {
-        return null;
+    public Screen update(@PathVariable long id, @RequestBody Screen data) {
+        return screenService.update(id, data);
     }
 
+    /**
+     * Retrieve a Screen by ID
+     * @param id Screen ID from path variable
+     * @return Screen object
+     */
+    @GetMapping("/{id}")
     @Override
-    public Screen read() {
-        return null;
+    public Screen read(@PathVariable long id) {
+        return screenService.read(id);
     }
 
-    @Override
+    /**
+     * Retrieve all Screens
+     * @return List of all Screens
+     */
+    @GetMapping
+    public List<Screen> findAll() {
+        return screenService.readAll();
+    }
+
+    /**
+     * Delete a Screen by ID
+     * @param id Screen ID from path variable
+     * @return Map indicating success
+     */
     @DeleteMapping("/{id}")
-    public Map<String,String> delete(@PathVariable long id) {
-
+    @Override
+    public Map<String, String> delete(@PathVariable long id) {
         screenService.delete(id);
-        return Map.of("result", "Sucess");
+        return Map.of("result", "Success");
     }
 }

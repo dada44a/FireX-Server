@@ -33,6 +33,7 @@ public class Ticket {
     @ManyToOne
     private Show show;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private List<Seat> seats;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TicketSeat> ticketSeats;
 }

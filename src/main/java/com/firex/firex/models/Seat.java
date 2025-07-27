@@ -21,11 +21,10 @@ public class Seat {
     @Column(nullable = false)
     private int columns;
 
-    @ManyToOne
-    private Screen screen;
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean isBooked = false;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id") // <- new foreign key to Ticket
-    private Ticket ticket;
+    private Screen screen;
 }
 

@@ -6,21 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Builder(toBuilder = true)
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Screen {
+@Builder(toBuilder = true)
+public class TicketSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne(optional = false)
+    private Ticket ticket;
 
-    @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Seat> seats;
+    @ManyToOne(optional = false)
+    private Seat seat;
+
+
 }
+
