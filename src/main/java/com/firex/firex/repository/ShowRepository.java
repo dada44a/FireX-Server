@@ -12,5 +12,8 @@ import java.util.List;
 
 public interface ShowRepository extends JpaRepository<Show, Long> {
     List<Show> findByMovieIdAndShowDate(Long movieId, LocalDate showDate);
+    List<Show> findByShowDate(LocalDate date);
+    List<Show> findByShowDateBetween(LocalDate start, LocalDate end);
+
 
 }

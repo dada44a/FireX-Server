@@ -13,7 +13,7 @@ import java.time.LocalTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
