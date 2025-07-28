@@ -1,5 +1,6 @@
 package com.firex.firex.models;
 
+import com.firex.firex.interfaces.Users;
 import com.firex.firex.models.Customer;
 import com.firex.firex.models.Show;
 import jakarta.persistence.*;
@@ -29,7 +30,7 @@ public class Ticket {
 
 
     @ManyToOne
-    private Customer customer;
+    private Users customer;
 
     @ManyToOne
     private Show show;

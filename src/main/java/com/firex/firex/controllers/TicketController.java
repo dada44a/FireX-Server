@@ -4,8 +4,11 @@ import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Ticket;
 import com.firex.firex.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,28 +18,68 @@ public class TicketController implements RestControllerInterface<Ticket> {
     @Autowired
     private TicketService ticketService;
 
-    @PostMapping
+    // ✅ General creation (not typically used in production)
     @Override
-    public Ticket create(Ticket data) {
+    @PostMapping("/create")
+    public Ticket create(@RequestBody Ticket data) {
         return ticketService.create(data);
     }
 
-    @Override
-    public Ticket update(long id, Ticket data) {
-        return null;
+    // ✅ Book ticket as USER
+    @Transactional
+    @PostMapping("/book/user")
+    public Ticket bookTicketAsUser(
+            @RequestParam Long showId,
+            @RequestBody List<Long> seatIds,
+            @RequestAttribute Long id
+    ) {
+        return ticketService.bookTicket(showId, seatIds, id);
     }
 
-    @Override
-    public Ticket read(long id) {
-        return null;
+    // ✅ Book ticket as ADMIN
+    @Transactional
+    @PostMapping("/book/admin")
+    public Ticket bookTicketAsAdmin(
+            @RequestParam Long showId,
+            @RequestBody List<Long> seatIds,
+            @RequestAttribute Long id
+    ) {
+        return ticketService.bookTicketAdmin(showId, seatIds, id);
     }
 
 
+    @Override
+    @PutMapping("/{id}")
+    public Ticket update(@PathVariable long id, @RequestBody Ticket data) {
+        return ticketService.update(id, data); // Returns fake object
+    }
+
+    // ✅ Read single ticket
+    @Override
+    @GetMapping("/{id}")
+    public Ticket read(@PathVariable long id) {
+        return ticketService.read(id);
+    }
+
+    // ✅ Delete ticket
     @Override
     @DeleteMapping("/{id}")
-    public Map<String,String> delete(@PathVariable long id) {
+    public Map<String, String> delete(@PathVariable long id) {
+        return ticketService.delete(id);
+    }
 
-        ticketService.delete(id);
-        return Map.of("result", "Success");
+    // ✅ Get tickets for a specific date
+    @GetMapping("/date")
+    public List<Ticket> getByDate(@RequestParam LocalDate date) {
+        return ticketService.getByDate(date);
+    }
+
+    // ✅ Get tickets between two dates
+    @GetMapping("/range")
+    public List<Ticket> getByDateRange(
+            @RequestParam LocalDate start,
+            @RequestParam LocalDate end
+    ) {
+        return ticketService.getShowsInDateRange(start, end);
     }
 }

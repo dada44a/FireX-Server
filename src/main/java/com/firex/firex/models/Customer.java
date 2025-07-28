@@ -1,5 +1,6 @@
 package com.firex.firex.models;
 
+import com.firex.firex.interfaces.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer implements Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
