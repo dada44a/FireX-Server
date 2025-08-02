@@ -25,26 +25,15 @@ public class TicketController implements RestControllerInterface<Ticket> {
         return ticketService.create(data);
     }
 
-    // ✅ Book ticket as USER
+    // ✅ Book ticket as Users
     @Transactional
-    @PostMapping("/book/user")
-    public Ticket bookTicketAsUser(
+    @PostMapping("/book/Users")
+    public Ticket bookTicketAsUsers(
             @RequestParam Long showId,
             @RequestBody List<Long> seatIds,
             @RequestAttribute Long id
     ) {
         return ticketService.bookTicket(showId, seatIds, id);
-    }
-
-    // ✅ Book ticket as ADMIN
-    @Transactional
-    @PostMapping("/book/admin")
-    public Ticket bookTicketAsAdmin(
-            @RequestParam Long showId,
-            @RequestBody List<Long> seatIds,
-            @RequestAttribute Long id
-    ) {
-        return ticketService.bookTicketAdmin(showId, seatIds, id);
     }
 
 

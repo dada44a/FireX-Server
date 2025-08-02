@@ -1,60 +1,84 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
-import com.firex.firex.models.Admin;
-import com.firex.firex.models.Customer;
-import com.firex.firex.repository.CustomerRepository;
+import com.firex.firex.models.Users;
+import com.firex.firex.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class CustomerService implements RestServiceInterface<Customer> {
+public class CustomerService{
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository customerRepository;
 
-    @Override
-    public Customer create(Customer data) {
+
+    public Users create(Users data) {
          return customerRepository.save(data);
     }
 
 
-    @PutMapping("/{id}")
-    @Override
-    public Customer update(@PathVariable long id, @RequestBody Customer data) {
-        Customer customer = customerRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Not Found"));
 
-        Customer updatedCustomer =  customer
-                .toBuilder()
-                .email(data.getEmail())
-                .name(data.getName())
-                .phone(data.getPhone())
-                .points(data.getPoints())
-                .build();
-        return customerRepository.save(updatedCustomer);
+
+    public Users updateOrCreate(@RequestBody Users data) {
+        Users existingUser = customerRepository.findByEmail(data.getEmail());
+
+        if (existingUser != null) {
+            // Update existing user
+            Users updatedUser = existingUser.toBuilder()
+                    .name(data.getName())
+                    .phone(data.getPhone())
+                    .points(data.getPoints())
+                    .build();
+            return customerRepository.save(updatedUser);
+        } else {
+            return customerRepository.save(data);
+        }
     }
 
-    @Override
-    public Customer read(long id) {
+    public void updateRole(Long id, String data) {
+        Users existingUser = customerRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("User Not Found"));
+
+        if (existingUser != null) {
+            // Update existing user
+            Users updatedUser = existingUser.toBuilder()
+                    .name(existingUser.getName())
+                    .phone(existingUser.getPhone())
+                    .points(existingUser.getPoints())
+                    .role(data)
+                    .build();
+            customerRepository.save(updatedUser);
+        } else {
+            System.out.println("HELLO WORLD");
+        }
+    }
+
+
+
+
+    public Users read(long id) {
 
         return customerRepository
                 .findById(id)
                 .orElseThrow(()->new RuntimeException("Customer Not Found"));
     }
 
-    public List<Customer> readAll(){
+    public Users readByEmail(String data) {
+
+        return customerRepository
+                .findByEmail(data);
+    }
+
+    public List<Users> readAll(){
         return customerRepository.findAll();
     }
 
 
-    @Override
+
     public Map<String,String> delete(long id) {
 
         customerRepository.deleteById(id);

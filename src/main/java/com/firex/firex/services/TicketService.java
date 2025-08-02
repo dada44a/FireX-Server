@@ -5,6 +5,7 @@ import com.firex.firex.models.*;
 import com.firex.firex.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,10 +24,7 @@ public class TicketService implements RestServiceInterface<Ticket> {
     private TicketSeatRepository ticketSeatRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private AdminRepository adminRepository;
+    private UserRepository UserRepository;
 
     @Autowired
     private SeatRepository seatRepository;
@@ -37,7 +35,8 @@ public class TicketService implements RestServiceInterface<Ticket> {
     }
 
     // ✅ Booking for customer
-    public Ticket bookTicket(Long showId, List<Long> seatIds, Long userId) {
+    @Transactional
+    public Ticket bookTicket(Long showId, List<Long> seatIds, Long UsersId) {
         Show show = showRepository.findById(showId)
                 .orElseThrow(() -> new RuntimeException("Show Not Found"));
 
@@ -46,46 +45,16 @@ public class TicketService implements RestServiceInterface<Ticket> {
             throw new RuntimeException("One or more seats already booked");
         }
 
-        Customer customer = customerRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+        Users users = UserRepository.findById(UsersId)
+                .orElseThrow(() -> new RuntimeException("Users Not Found"));
 
         // Award points
-        customer.setPoints(customer.getPoints() + 10);
-        customerRepository.save(customer);
+        users.setPoints(users.getPoints() + 10);
+        UserRepository.save(users);
 
         Ticket ticket = new Ticket();
         ticket.setShow(show);
-        ticket.setCustomer(customer);
-        ticket.setPaymentDate(LocalDate.now());
-
-        List<Seat> seats = seatRepository.findAllById(seatIds);
-        List<TicketSeat> ticketSeats = seats.stream().map(seat -> {
-            TicketSeat ts = new TicketSeat();
-            ts.setSeat(seat);
-            ts.setTicket(ticket);
-            return ts;
-        }).toList();
-
-        ticket.setTicketSeats(ticketSeats);
-        return ticketRepository.save(ticket);
-    }
-
-    // ✅ Booking for admin (without awarding points)
-    public Ticket bookTicketAdmin(Long showId, List<Long> seatIds, Long adminId) {
-        Show show = showRepository.findById(showId)
-                .orElseThrow(() -> new RuntimeException("Show Not Found"));
-
-        boolean anyBooked = ticketSeatRepository.existsBySeatIdInAndTicket_ShowId(seatIds, showId);
-        if (anyBooked) {
-            throw new RuntimeException("One or more seats already booked");
-        }
-
-        Admin admin = adminRepository.findById(adminId)
-                .orElseThrow(() -> new RuntimeException("Admin Not Found"));
-
-        Ticket ticket = new Ticket();
-        ticket.setShow(show);
-        ticket.setCustomer(admin);
+        ticket.setCustomer(users);
         ticket.setPaymentDate(LocalDate.now());
 
         List<Seat> seats = seatRepository.findAllById(seatIds);
@@ -102,8 +71,8 @@ public class TicketService implements RestServiceInterface<Ticket> {
 
     @Override
     public Ticket update(long id, Ticket data) {
-        // Updates not allowed after booking, return fake class
-        return new Ticket();
+        // Updates not allowed after booking
+        return new Ticket(); // or throw exception if preferred
     }
 
     @Override
@@ -120,6 +89,7 @@ public class TicketService implements RestServiceInterface<Ticket> {
         return ticketRepository.findByPaymentDateBetween(start, end);
     }
 
+    @Override
     public Map<String, String> delete(long id) {
         ticketRepository.deleteById(id);
         return Map.of("result", "Success");

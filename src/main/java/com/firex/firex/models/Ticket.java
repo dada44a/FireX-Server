@@ -1,8 +1,5 @@
 package com.firex.firex.models;
 
-import com.firex.firex.interfaces.Users;
-import com.firex.firex.models.Customer;
-import com.firex.firex.models.Show;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

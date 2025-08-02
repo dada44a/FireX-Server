@@ -33,6 +33,6 @@ public class Movie {
 
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
-    private Admin admin;
+    private Users admin;
 
 }

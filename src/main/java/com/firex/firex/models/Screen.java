@@ -21,6 +21,9 @@ public class Screen {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private int price;
+
     @OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats;
 }
