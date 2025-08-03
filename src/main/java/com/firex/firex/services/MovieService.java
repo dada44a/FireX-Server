@@ -42,7 +42,9 @@ public class MovieService implements RestServiceInterface<Movie> {
                 .title(data.getTitle())
                 .description(data.getDescription())
                 .releaseDate(data.getReleaseDate())
-                .admin(data.getAdmin())
+                .casts(data.getCasts())
+                .genre(data.getGenre())
+                .imageLink(data.getImageLink())
                 .build();
 
         return movieRepository.save(updatedMovie);

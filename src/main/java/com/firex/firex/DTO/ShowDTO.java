@@ -6,7 +6,6 @@ public record ShowDTO(
         Long id,
         java.time.LocalTime showTime,
         LocalDate showDate,
-        MovieSummaryDTO movie,
-        AdminSummaryDTO admin
+        MovieSummaryDTO movie
 ) {
 }

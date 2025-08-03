@@ -6,6 +6,5 @@ public record MovieDTO(
         Long id,
         String title,
         String description,
-        LocalDate releaseDate,
-        AdminSummaryDTO admin
+        LocalDate releaseDate
 ){}

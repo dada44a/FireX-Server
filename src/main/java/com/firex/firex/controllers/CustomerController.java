@@ -68,12 +68,11 @@ public class CustomerController {
      * Delete a customer by ID
      *
      * @param id Customer ID from the path
-     * @return A success message
      */
     @DeleteMapping("/{id}")
 
-    public Map<String, String> delete(@PathVariable long id) {
-        return customerService.delete(id);
+    public void delete(@PathVariable long id) {
+         customerService.delete(id);
     }
 
     @PostMapping("/by_email")

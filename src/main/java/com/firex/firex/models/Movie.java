@@ -22,17 +22,22 @@ public class Movie {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
+
+    @Column(nullable = false)
+    private String genre;
+
+    @Column(nullable = false)
+    private String casts;
 
     @Column(nullable = false)
     private LocalDate releaseDate;
 
+    @Column(nullable = false)
+    private String imageLink;
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Show> shows;
-
-    @ManyToOne
-    @JoinColumn(name = "admin_id", nullable = false)
-    private Users admin;
 
 }

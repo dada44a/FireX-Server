@@ -44,13 +44,15 @@ public class CustomerService{
                 .orElseThrow(()-> new RuntimeException("User Not Found"));
 
         if (existingUser != null) {
-            // Update existing user
+//             Update existing user
             Users updatedUser = existingUser.toBuilder()
                     .name(existingUser.getName())
                     .phone(existingUser.getPhone())
                     .points(existingUser.getPoints())
                     .role(data)
                     .build();
+
+
             customerRepository.save(updatedUser);
         } else {
             System.out.println("HELLO WORLD");
