@@ -1,6 +1,6 @@
 package com.firex.firex.controllers;
 
-import com.firex.firex.interfaces.RestControllerInterface;
+
 import com.firex.firex.models.Screen;
 import com.firex.firex.services.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/screen")
-public class ScreenController implements RestControllerInterface<Screen> {
+public class ScreenController {
 
     @Autowired
     private ScreenService screenService;
@@ -22,7 +22,6 @@ public class ScreenController implements RestControllerInterface<Screen> {
      * @return Created Screen
      */
     @PostMapping
-    @Override
     public Screen create(@RequestBody Screen data) {
         return screenService.create(data);
     }
@@ -44,7 +43,6 @@ public class ScreenController implements RestControllerInterface<Screen> {
      * @return Updated Screen
      */
     @PutMapping("/{id}")
-    @Override
     public Screen update(@PathVariable long id, @RequestBody Screen data) {
         return screenService.update(id, data);
     }
@@ -55,7 +53,7 @@ public class ScreenController implements RestControllerInterface<Screen> {
      * @return Screen object
      */
     @GetMapping("/{id}")
-    @Override
+
     public Screen read(@PathVariable long id) {
         return screenService.read(id);
     }
@@ -75,7 +73,6 @@ public class ScreenController implements RestControllerInterface<Screen> {
      * @return Map indicating success
      */
     @DeleteMapping("/{id}")
-    @Override
     public Map<String, String> delete(@PathVariable long id) {
         screenService.delete(id);
         return Map.of("result", "Success");

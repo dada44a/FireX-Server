@@ -1,7 +1,6 @@
 package com.firex.firex.controllers;
 
 import com.firex.firex.DTO.EmailRequest;
-import com.firex.firex.interfaces.RestControllerInterface;
 import com.firex.firex.models.Users;
 import com.firex.firex.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

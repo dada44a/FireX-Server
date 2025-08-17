@@ -1,7 +1,9 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
+import com.firex.firex.DTO.SeatDTO;
+import com.firex.firex.models.Screen;
 import com.firex.firex.models.Seat;
+import com.firex.firex.repository.ScreenRepository;
 import com.firex.firex.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,19 +12,31 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SeatService implements RestServiceInterface<Seat> {
+public class SeatService {
 
     @Autowired
     private SeatRepository seatRepository;
+
+    @Autowired
+    private ScreenRepository screenRepository;
 
     /**
      * Create a new Seat
      * @param data Seat objects to save
      * @return Saved Seat
      */
-    @Override
-    public Seat create(Seat data) {
-        return seatRepository.save(data);
+
+    public Seat create(SeatDTO data) {
+        Screen screen = screenRepository.findById(data.getScreenId())
+                .orElseThrow(() -> new RuntimeException("Screen not found"));
+
+        Seat seat = Seat.builder()
+                .rows(data.getRow())
+                .columns(data.getColumn())
+                .isBooked(false)
+                .screen(screen)
+                .build();
+        return seatRepository.save(seat);
     }
 
     /**
@@ -31,7 +45,7 @@ public class SeatService implements RestServiceInterface<Seat> {
      * @param data Updated Seat data
      * @return Updated Seat
      */
-    @Override
+
     public Seat update(long id, Seat data) {
         Seat seat = seatRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Seat with ID " + id + " not found"));
@@ -66,7 +80,7 @@ public class SeatService implements RestServiceInterface<Seat> {
      * @param id Seat ID
      * @return Seat object
      */
-    @Override
+
     public Seat read(long id) {
         return seatRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Seat with ID " + id + " not found"));
@@ -91,11 +105,23 @@ public class SeatService implements RestServiceInterface<Seat> {
 
     /**
      * Create multiple Seats at once
-     * @param seats List of Seat objects to save
+     * @param data List of Seat objects to save
      * @return List of saved Seats
      */
-    public List<Seat> createAll(List<Seat> seats) {
+    public List<Seat> createAll(List<SeatDTO> data) {
+        List<Seat> seats = data.stream().map(dto -> {
+            Screen screen = screenRepository.findById(dto.getScreenId())
+                    .orElseThrow(() -> new RuntimeException("Screen not found"));
+            return Seat.builder()
+                    .rows(dto.getRow())
+                    .columns(dto.getColumn())
+                    .isBooked(false)
+                    .screen(screen)
+                    .build();
+        }).toList();
+
         return seatRepository.saveAll(seats);
+
     }
 
     /**
@@ -103,7 +129,7 @@ public class SeatService implements RestServiceInterface<Seat> {
      * @param id Seat ID
      * @return Map indicating success
      */
-    @Override
+
     public Map<String, String> delete(long id) {
         seatRepository.deleteById(id);
         return Map.of("result", "Success");

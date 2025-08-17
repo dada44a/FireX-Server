@@ -1,6 +1,7 @@
 package com.firex.firex.controllers;
 
-import com.firex.firex.interfaces.RestControllerInterface;
+
+import com.firex.firex.DTO.SeatDTO;
 import com.firex.firex.models.Seat;
 import com.firex.firex.services.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/seat")
-public class SeatController implements RestControllerInterface<Seat> {
+public class SeatController {
 
     @Autowired
     private SeatService seatService;
@@ -22,8 +23,8 @@ public class SeatController implements RestControllerInterface<Seat> {
      * @return Created Seat
      */
     @PostMapping
-    @Override
-    public Seat create(@RequestBody Seat data) {
+
+    public Seat create(@RequestBody SeatDTO data) {
         return seatService.create(data);
     }
 
@@ -33,7 +34,7 @@ public class SeatController implements RestControllerInterface<Seat> {
      * @return List of created Seats
      */
     @PostMapping("/all")
-    public List<Seat> createAll(@RequestBody List<Seat> seats) {
+    public List<Seat> createAll(@RequestBody List<SeatDTO> seats) {
         return seatService.createAll(seats);
     }
 
@@ -44,7 +45,7 @@ public class SeatController implements RestControllerInterface<Seat> {
      * @return Updated Seat
      */
     @PutMapping("/{id}")
-    @Override
+
     public Seat update(@PathVariable long id, @RequestBody Seat data) {
         return seatService.update(id, data);
     }
@@ -66,7 +67,7 @@ public class SeatController implements RestControllerInterface<Seat> {
      * @return Seat object
      */
     @GetMapping("/{id}")
-    @Override
+
     public Seat read(@PathVariable long id) {
         return seatService.read(id);
     }
@@ -96,7 +97,7 @@ public class SeatController implements RestControllerInterface<Seat> {
      * @return Map indicating success
      */
     @DeleteMapping("/{id}")
-    @Override
+
     public Map<String, String> delete(@PathVariable long id) {
         seatService.delete(id);
         return Map.of("result", "Success");

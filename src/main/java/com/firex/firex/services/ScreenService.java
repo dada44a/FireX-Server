@@ -1,6 +1,6 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
+
 import com.firex.firex.models.Screen;
 import com.firex.firex.repository.ScreenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScreenService implements RestServiceInterface<Screen> {
+public class ScreenService{
 
     @Autowired
     private ScreenRepository screenRepository;
@@ -20,7 +20,7 @@ public class ScreenService implements RestServiceInterface<Screen> {
      * @param data Screen object to save
      * @return Saved Screen
      */
-    @Override
+
     public Screen create(Screen data) {
         return screenRepository.save(data);
     }
@@ -40,7 +40,7 @@ public class ScreenService implements RestServiceInterface<Screen> {
      * @param data Updated Screen data
      * @return Updated Screen
      */
-    @Override
+
     public Screen update(long id, Screen data) {
         Screen screen = screenRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Screen with ID " + id + " not found"));
@@ -57,7 +57,7 @@ public class ScreenService implements RestServiceInterface<Screen> {
      * @param id Screen ID
      * @return Screen with the specified ID
      */
-    @Override
+
     public Screen read(long id) {
         return screenRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Screen with ID " + id + " not found"));
@@ -76,7 +76,7 @@ public class ScreenService implements RestServiceInterface<Screen> {
      * @param id Screen ID
      * @return Result map indicating success
      */
-    @Override
+
     public Map<String, String> delete(long id) {
         screenRepository.deleteById(id);
         return Map.of("result", "Success");

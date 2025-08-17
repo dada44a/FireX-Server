@@ -1,6 +1,6 @@
 package com.firex.firex.controllers;
 
-import com.firex.firex.interfaces.RestControllerInterface;
+
 import com.firex.firex.models.Movie;
 import com.firex.firex.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/movie")
-public class MovieController implements RestControllerInterface<Movie> {
+public class MovieController{
 
     @Autowired
     private MovieService movieService;
@@ -23,7 +23,7 @@ public class MovieController implements RestControllerInterface<Movie> {
      * @return The created movie
      */
     @PostMapping
-    @Override
+
     public Movie create(@RequestBody Movie data) {
         return movieService.create(data);
     }
@@ -35,7 +35,7 @@ public class MovieController implements RestControllerInterface<Movie> {
      * @return The updated movie
      */
     @PutMapping("/{id}")
-    @Override
+
     public Movie update(@PathVariable long id, @RequestBody Movie data) {
         return movieService.update(id, data);
     }
@@ -46,7 +46,7 @@ public class MovieController implements RestControllerInterface<Movie> {
      * @return Movie with the given ID
      */
     @GetMapping("/{id}")
-    @Override
+
     public Movie read(@PathVariable long id) {
         return movieService.read(id);
     }
@@ -75,7 +75,7 @@ public class MovieController implements RestControllerInterface<Movie> {
      * @return A success message
      */
     @DeleteMapping("/{id}")
-    @Override
+
     public Map<String, String> delete(@PathVariable long id) {
         return movieService.delete(id);
     }

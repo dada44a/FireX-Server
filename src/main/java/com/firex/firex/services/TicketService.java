@@ -1,6 +1,6 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
+
 import com.firex.firex.models.*;
 import com.firex.firex.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class TicketService implements RestServiceInterface<Ticket> {
+public class TicketService{
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -29,7 +29,7 @@ public class TicketService implements RestServiceInterface<Ticket> {
     @Autowired
     private SeatRepository seatRepository;
 
-    @Override
+
     public Ticket create(Ticket data) {
         return ticketRepository.save(data);
     }
@@ -69,13 +69,13 @@ public class TicketService implements RestServiceInterface<Ticket> {
         return ticketRepository.save(ticket);
     }
 
-    @Override
+
     public Ticket update(long id, Ticket data) {
         // Updates not allowed after booking
         return new Ticket(); // or throw exception if preferred
     }
 
-    @Override
+
     public Ticket read(long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket Not Found"));
@@ -89,7 +89,7 @@ public class TicketService implements RestServiceInterface<Ticket> {
         return ticketRepository.findByPaymentDateBetween(start, end);
     }
 
-    @Override
+
     public Map<String, String> delete(long id) {
         ticketRepository.deleteById(id);
         return Map.of("result", "Success");

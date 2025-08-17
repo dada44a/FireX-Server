@@ -1,6 +1,5 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
 import com.firex.firex.models.Show;
 import com.firex.firex.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ShowService implements RestServiceInterface<Show> {
+public class ShowService{
 
     @Autowired
     private ShowRepository showRepository;
@@ -21,7 +20,7 @@ public class ShowService implements RestServiceInterface<Show> {
      * @param data the Show data to save
      * @return the saved Show
      */
-    @Override
+
     public Show create(Show data) {
         return showRepository.save(data);
     }
@@ -32,7 +31,7 @@ public class ShowService implements RestServiceInterface<Show> {
      * @param data Updated data
      * @return the updated Show entity
      */
-    @Override
+
     public Show update(long id, Show data) {
         Show show = showRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Show Not Found"));
@@ -51,7 +50,7 @@ public class ShowService implements RestServiceInterface<Show> {
      * @param id the ID of the Show
      * @return the found Show
      */
-    @Override
+
     public Show read(long id) {
         return showRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Show Not Found"));

@@ -1,6 +1,6 @@
 package com.firex.firex.controllers;
 
-import com.firex.firex.interfaces.RestControllerInterface;
+
 import com.firex.firex.models.Show;
 import com.firex.firex.services.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/show")
-public class ShowController implements RestControllerInterface<Show> {
+public class ShowController {
 
     @Autowired
     private ShowService showService;
@@ -24,7 +24,7 @@ public class ShowController implements RestControllerInterface<Show> {
      * @return the created Show
      */
     @PostMapping
-    @Override
+
     public Show create(@RequestBody Show data) {
         return showService.create(data);
     }
@@ -36,7 +36,7 @@ public class ShowController implements RestControllerInterface<Show> {
      * @param data updated Show data from body
      * @return updated Show object
      */
-    @Override
+
     @PutMapping("/{id}")
     public Show update(@PathVariable long id, @RequestBody Show data) {
         return showService.update(id, data);
@@ -48,7 +48,7 @@ public class ShowController implements RestControllerInterface<Show> {
      * @param id Show ID
      * @return the found Show
      */
-    @Override
+
     @GetMapping("/{id}")
     public Show read(@PathVariable long id) {
         return showService.read(id);
@@ -105,7 +105,7 @@ public class ShowController implements RestControllerInterface<Show> {
      * @param id ID of the Show
      * @return success message map
      */
-    @Override
+
     @DeleteMapping("/{id}")
     public Map<String, String> delete(@PathVariable long id) {
         showService.delete(id);

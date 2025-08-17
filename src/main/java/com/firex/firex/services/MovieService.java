@@ -1,6 +1,6 @@
 package com.firex.firex.services;
 
-import com.firex.firex.interfaces.RestServiceInterface;
+
 import com.firex.firex.models.Movie;
 import com.firex.firex.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MovieService implements RestServiceInterface<Movie> {
+public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
@@ -21,7 +21,7 @@ public class MovieService implements RestServiceInterface<Movie> {
      * @param data Movie object to be saved
      * @return The saved Movie
      */
-    @Override
+
     public Movie create(Movie data) {
         return movieRepository.save(data);
     }
@@ -32,7 +32,7 @@ public class MovieService implements RestServiceInterface<Movie> {
      * @param data Updated Movie data
      * @return The updated Movie
      */
-    @Override
+
     public Movie update(long id, Movie data) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movie with ID " + id + " not found"));
@@ -55,7 +55,7 @@ public class MovieService implements RestServiceInterface<Movie> {
      * @param id Movie ID
      * @return Movie with the given ID
      */
-    @Override
+
     public Movie read(long id) {
         return movieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movie with ID " + id + " not found"));
@@ -83,7 +83,7 @@ public class MovieService implements RestServiceInterface<Movie> {
      * @param id Movie ID
      * @return A result message
      */
-    @Override
+
     public Map<String, String> delete(long id) {
         movieRepository.deleteById(id);
         return Map.of("result", "Success");

@@ -1,6 +1,6 @@
 package com.firex.firex.controllers;
 
-import com.firex.firex.interfaces.RestControllerInterface;
+
 import com.firex.firex.models.Ticket;
 import com.firex.firex.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ticket")
-public class TicketController implements RestControllerInterface<Ticket> {
+public class TicketController {
 
     @Autowired
     private TicketService ticketService;
 
     // ✅ General creation (not typically used in production)
-    @Override
+
     @PostMapping("/create")
     public Ticket create(@RequestBody Ticket data) {
         return ticketService.create(data);
@@ -37,21 +37,21 @@ public class TicketController implements RestControllerInterface<Ticket> {
     }
 
 
-    @Override
+
     @PutMapping("/{id}")
     public Ticket update(@PathVariable long id, @RequestBody Ticket data) {
         return ticketService.update(id, data); // Returns fake object
     }
 
     // ✅ Read single ticket
-    @Override
+
     @GetMapping("/{id}")
     public Ticket read(@PathVariable long id) {
         return ticketService.read(id);
     }
 
     // ✅ Delete ticket
-    @Override
+
     @DeleteMapping("/{id}")
     public Map<String, String> delete(@PathVariable long id) {
         return ticketService.delete(id);

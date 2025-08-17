@@ -1,5 +1,6 @@
 package com.firex.firex.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class Seat {
     private boolean isBooked = false;
 
     @ManyToOne
+    @JsonIgnore
     private Screen screen;
 }
 
