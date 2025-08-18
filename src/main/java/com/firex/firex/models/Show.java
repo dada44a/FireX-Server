@@ -32,4 +32,8 @@ public class Show {
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     private Users admin;
+
+    @ManyToOne
+    @JoinColumn(name = "screen_id", nullable = false)
+    private Screen screen;
 }

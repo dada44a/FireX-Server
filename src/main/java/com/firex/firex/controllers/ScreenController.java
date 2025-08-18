@@ -53,7 +53,6 @@ public class ScreenController {
      * @return Screen object
      */
     @GetMapping("/{id}")
-
     public Screen read(@PathVariable long id) {
         return screenService.read(id);
     }

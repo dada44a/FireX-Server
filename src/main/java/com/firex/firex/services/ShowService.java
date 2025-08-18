@@ -1,105 +1,111 @@
 package com.firex.firex.services;
 
+import com.firex.firex.DTO.ShowDTO;
+import com.firex.firex.models.Movie;
+import com.firex.firex.models.Screen;
 import com.firex.firex.models.Show;
+import com.firex.firex.models.Users;
+import com.firex.firex.repository.MovieRepository;
 import com.firex.firex.repository.ShowRepository;
+import com.firex.firex.repository.ScreenRepository;
+import com.firex.firex.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class ShowService{
+public class ShowService {
 
     @Autowired
     private ShowRepository showRepository;
 
-    /**
-     * Create and persist a new Show entity.
-     * @param data the Show data to save
-     * @return the saved Show
-     */
+    @Autowired
+    private MovieRepository movieRepository;
 
-    public Show create(Show data) {
-        return showRepository.save(data);
+    @Autowired
+    private ScreenRepository screenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    /** ---------- Create from DTO ---------- */
+    public Show createFromDTO(ShowDTO showDTO) {
+        Movie movie = movieRepository.findById(showDTO.getMovieId())
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+
+        Screen screen = screenRepository.findById(showDTO.getScreenId())
+                .orElseThrow(() -> new RuntimeException("Screen not found"));
+
+        Users admin = userRepository.findByEmail(showDTO.getAdminEmail());
+
+        Show show = Show.builder()
+                .movie(movie)
+                .screen(screen)
+                .showDate(showDTO.getShowDate())
+                .showTime(showDTO.getShowTime())
+                .admin(admin)
+                .build();
+
+        return showRepository.save(show);
     }
 
-    /**
-     * Update an existing Show by ID.
-     * @param id ID of the show to update
-     * @param data Updated data
-     * @return the updated Show entity
-     */
+    /** ---------- Update from DTO ---------- */
+    public Show updateFromDTO(long id, ShowDTO showDTO) {
+        Show existingShow = showRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Show not found"));
 
-    public Show update(long id, Show data) {
-        Show show = showRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Show Not Found"));
+        Movie movie = movieRepository.findById(showDTO.getMovieId())
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
 
-        // Use builder to update only relevant fields
-        Show updatedShow = show.toBuilder()
-                .showDate(data.getShowDate())
-                .showTime(data.getShowTime())
+        Screen screen = screenRepository.findById(showDTO.getScreenId())
+                .orElseThrow(() -> new RuntimeException("Screen not found"));
+
+        Users admin = userRepository.findByEmail(showDTO.getAdminEmail());
+
+        Show updatedShow = existingShow.toBuilder()
+                .movie(movie)
+                .screen(screen)
+                .showDate(showDTO.getShowDate())
+                .showTime(showDTO.getShowTime())
+                .admin(admin)
                 .build();
 
         return showRepository.save(updatedShow);
     }
 
-    /**
-     * Read a single Show by its ID.
-     * @param id the ID of the Show
-     * @return the found Show
-     */
-
-    public Show read(long id) {
-        return showRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Show Not Found"));
+    /** ---------- Get single ShowDTO ---------- */
+    public ShowDTO getShowDTO(long id) {
+        Show show = showRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Show not found"));
+        return mapToDTO(show);
     }
 
-    /**
-     * Fetch all Show entries.
-     * @return a list of all Shows
-     */
-    public List<Show> readAll() {
-        return showRepository.findAll();
+    /** ---------- Get all Shows as DTOs ---------- */
+    public List<ShowDTO> getAllShowsDTO() {
+        return showRepository.findAll()
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
-    /**
-     * Get all Shows scheduled on a specific date.
-     * @param data the date to filter shows
-     * @return list of Shows on the given date
-     */
-    public List<Show> getShowsByDate(LocalDate data) {
-        return showRepository.findByShowDate(data);
-    }
-
-    /**
-     * Get Shows within a specific date range (inclusive).
-     * Useful for schedules or reporting.
-     * @param start start date
-     * @param end end date
-     * @return list of Shows between the given dates
-     */
-    public List<Show> getShowsInDateRange(LocalDate start, LocalDate end) {
-        return showRepository.findByShowDateBetween(start, end);
-    }
-
-    /**
-     * Bulk create Shows in one transaction.
-     * @param data list of Show entries (note: variable name 'seat' is misleading)
-     * @return saved list of Shows
-     */
-    public List<Show> createAll(List<Show> data) {
-        return showRepository.saveAll(data);
-    }
-
-    /**
-     * Delete a Show by its ID.
-     * @param id the ID of the Show to delete
-     * @return result message
-     */
+    /** ---------- Delete Show ---------- */
     public Map<String, String> delete(long id) {
         showRepository.deleteById(id);
-        return Map.of("result", "Sucess");
+        return Map.of("result", "Success");
+    }
+
+    /** ---------- Helper: Show -> ShowDTO ---------- */
+    public ShowDTO mapToDTO(Show show) {
+        return new ShowDTO(
+                show.getId(),
+                show.getMovie().getId(),
+                show.getShowTime(),
+                show.getShowDate(),
+                show.getAdmin().getEmail(),
+                show.getScreen().getId()
+        );
     }
 }

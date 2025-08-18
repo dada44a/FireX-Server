@@ -1,7 +1,6 @@
 package com.firex.firex.controllers;
 
-
-import com.firex.firex.models.Show;
+import com.firex.firex.DTO.ShowDTO;
 import com.firex.firex.services.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,98 +16,61 @@ public class ShowController {
     @Autowired
     private ShowService showService;
 
-    /**
-     * Create a single Show entry.
-     * Mapped to POST /api/show
-     * @param data Show an object from request body
-     * @return the created Show
-     */
+    /** ---------- Create a single Show ---------- */
     @PostMapping
-
-    public Show create(@RequestBody Show data) {
-        return showService.create(data);
+    public ShowDTO create(@RequestBody ShowDTO data) {
+        return showService.mapToDTO(showService.createFromDTO(data));
     }
 
-    /**
-     * Update an existing Show by its ID.
-     * Mapped to PUT /api/show/{id}
-     * @param id Show ID from a path
-     * @param data updated Show data from body
-     * @return updated Show object
-     */
-
+    /** ---------- Update a Show by ID ---------- */
     @PutMapping("/{id}")
-    public Show update(@PathVariable long id, @RequestBody Show data) {
-        return showService.update(id, data);
+    public ShowDTO update(@PathVariable long id, @RequestBody ShowDTO data) {
+        return showService.mapToDTO(showService.updateFromDTO(id, data));
     }
 
-    /**
-     * Get a single Show by ID.
-     * Mapped to GET /api/show/{id}
-     * @param id Show ID
-     * @return the found Show
-     */
-
+    /** ---------- Get a Show by ID ---------- */
     @GetMapping("/{id}")
-    public Show read(@PathVariable long id) {
-        return showService.read(id);
+    public ShowDTO read(@PathVariable long id) {
+        return showService.getShowDTO(id);
     }
 
-    /**
-     * Get all Shows.
-     * Mapped to GET /api/show
-     * @return list of all Shows
-     */
+    /** ---------- Get all Shows ---------- */
     @GetMapping
-    public List<Show> readAll() {
-        return showService.readAll();
+    public List<ShowDTO> readAll() {
+        return showService.getAllShowsDTO();
     }
 
-    /**
-     * Get all shows scheduled for today.
-     * Mapped to GET /api/show/now
-     * @return list of today's shows
-     */
-    @GetMapping("/now")
-    public List<Show> getTodayShows() {
-        return showService.getShowsByDate(LocalDate.now());
+    /** ---------- Get shows for today ---------- */
+    @GetMapping("/today")
+    public List<ShowDTO> getTodayShows() {
+        LocalDate today = LocalDate.now();
+        return showService.getAllShowsDTO().stream()
+                .filter(show -> today.equals(show.getShowDate()))
+                .toList();
     }
 
-    /**
-     * Get shows within a specified date range.
-     * Example request: /api/show/in-between?start=2025-07-01&end=2025-07-31
-     * @param start start date
-     * @param end end date
-     * @return list of shows between those dates
-     */
+    /** ---------- Get shows within a date range ---------- */
     @GetMapping("/in-between")
-    public List<Show> getShowsBetween(
+    public List<ShowDTO> getShowsBetween(
             @RequestParam LocalDate start,
             @RequestParam LocalDate end) {
-        return showService.getShowsInDateRange(start, end);
+        return showService.getAllShowsDTO().stream()
+                .filter(show -> !show.getShowDate().isBefore(start) && !show.getShowDate().isAfter(end))
+                .toList();
     }
 
-    /**
-     * Bulk-create multiple Shows.
-     * Mapped to POST /api/show/all
-     * @param data list of Show objects
-     * @return list of saved Shows
-     */
+    /** ---------- Bulk-create Shows ---------- */
     @PostMapping("/all")
-    public List<Show> createAll(@RequestBody List<Show> data) {
-        return showService.createAll(data);
+    public List<ShowDTO> createAll(@RequestBody List<ShowDTO> data) {
+        return data.stream()
+                .map(showService::createFromDTO)
+                .map(showService::mapToDTO)
+                .toList();
     }
 
-    /**
-     * Delete a Show by ID.
-     * Mapped to DELETE /api/show/{id}
-     * @param id ID of the Show
-     * @return success message map
-     */
-
+    /** ---------- Delete a Show by ID ---------- */
     @DeleteMapping("/{id}")
     public Map<String, String> delete(@PathVariable long id) {
-        showService.delete(id);
-        return Map.of("result", "Success");
+        return showService.delete(id);
     }
 }
