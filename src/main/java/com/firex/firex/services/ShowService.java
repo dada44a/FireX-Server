@@ -13,8 +13,10 @@ import com.firex.firex.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ShowService {
@@ -89,6 +91,18 @@ public class ShowService {
                 .stream()
                 .map(this::mapToDTO)
                 .toList();
+    }
+
+    public List<Movie> getTodayMovies() {
+        LocalDate today = LocalDate.now();
+
+        List<Show> showsToday = showRepository.findByShowDate(today);
+
+        // Extract unique movies from shows
+        return showsToday.stream()
+                .map(Show::getMovie)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     /** ---------- Delete Show ---------- */

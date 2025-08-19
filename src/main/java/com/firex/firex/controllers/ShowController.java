@@ -1,6 +1,7 @@
 package com.firex.firex.controllers;
 
 import com.firex.firex.DTO.ShowDTO;
+import com.firex.firex.models.Movie;
 import com.firex.firex.services.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +67,13 @@ public class ShowController {
                 .map(showService::createFromDTO)
                 .map(showService::mapToDTO)
                 .toList();
+    }
+
+
+    /** ---------- Get movies that have shows today ---------- */
+    @GetMapping("/today-movies")
+    public List<Movie> getTodayMovies() {
+        return showService.getTodayMovies();
     }
 
     /** ---------- Delete a Show by ID ---------- */
