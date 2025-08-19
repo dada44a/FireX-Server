@@ -2,6 +2,8 @@ package com.firex.firex.controllers;
 
 import com.firex.firex.DTO.ShowDTO;
 import com.firex.firex.models.Movie;
+import com.firex.firex.models.Show;
+import com.firex.firex.services.MovieService;
 import com.firex.firex.services.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ public class ShowController {
 
     @Autowired
     private ShowService showService;
+
+    @Autowired
+    private MovieService movieService;
 
     /** ---------- Create a single Show ---------- */
     @PostMapping
@@ -76,6 +81,11 @@ public class ShowController {
         return showService.getTodayMovies();
     }
 
+    // ✅ Get all shows of a particular movie
+    @GetMapping("/movie/{movieId}")
+    public List<Show> getShowsByMovie(@PathVariable Long movieId) {
+        return showService.getTodayShowsForMovie(movieId);
+    }
     /** ---------- Delete a Show by ID ---------- */
     @DeleteMapping("/{id}")
     public Map<String, String> delete(@PathVariable long id) {

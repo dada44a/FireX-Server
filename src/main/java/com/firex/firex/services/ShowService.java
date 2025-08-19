@@ -122,4 +122,8 @@ public class ShowService {
                 show.getScreen().getId()
         );
     }
+
+    public List<Show> getTodayShowsForMovie(Long movieId) {
+        return showRepository.findByMovieIdAndShowDate(movieId, LocalDate.now());
+    }
 }
